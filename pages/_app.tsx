@@ -1,4 +1,6 @@
 import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 
 import BottomBar from "@/components/layout/BottomBar";
 import LeftSidebar from "@/components/layout/LeftSidebar";
@@ -9,7 +11,8 @@ import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <SessionProvider session={pageProps.session}>
+      <Toaster />
       <LoginModal />
       <RegisterModal />
       <div className="flex flex-row justify-center">
@@ -20,6 +23,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <RightSidebar />
       </div>
       <BottomBar />
-    </>
+    </SessionProvider>
   );
 }

@@ -1,8 +1,8 @@
+import Image from "next/image";
 import { useCallback } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 import Button from "./Button";
-import Image from "next/image";
 
 interface ModalProps {
   title?: string;
@@ -95,14 +95,10 @@ const Modal: React.FC<ModalProps> = ({
                 alt="Logo"
               />
             ) : null}
-            <h3 className="text-2xl font-semibold">
-              {title}
-            </h3>
+            <h3 className="text-2xl font-semibold">{title}</h3>
           </div>
           {/* Body */}
-          <div className="relative flex-auto mt-3">
-            {body}
-          </div>
+          <div className="relative flex-auto mt-3">{body}</div>
           {/* Footer */}
           <div className="flex flex-col items-center justify-center gap-2 mt-3">
             <Button

@@ -1,16 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
+import { IoIosLogOut } from "react-icons/io";
 import { BsBell, BsBellFill } from "react-icons/bs";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaUser, FaRegUser } from "react-icons/fa6";
 import { GoHome, GoHomeFill } from "react-icons/go";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
 
 const LeftSidebar = () => {
-  const currentUser = { id: 12 };
+  const { data: currentUser } = useCurrentUser();
 
   const items = [
     {
@@ -36,7 +40,7 @@ const LeftSidebar = () => {
     },
     {
       label: "Profile",
-      href: `/users/${currentUser?.id}`,
+      href: `/profile/${currentUser?.id}`,
       icon: FaRegUser,
       activeIcon: FaUser,
       auth: true,
@@ -83,6 +87,14 @@ const LeftSidebar = () => {
             alert={item.alert}
           />
         ))}
+
+        {currentUser ? (
+          <SidebarItem
+            onClick={() => signOut()}
+            icon={IoIosLogOut}
+            label="Logout"
+          />
+        ) : null}
 
         <SidebarTweetButton />
       </div>
