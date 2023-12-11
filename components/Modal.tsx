@@ -66,7 +66,9 @@ const Modal: React.FC<ModalProps> = ({
       bg-white/50 backdrop-blur-2xl
      "
     >
-      <div className={`relative mx-auto border rounded-xl ${modalSize[size]}`}>
+      <div
+        className={`bg-white relative mx-auto border rounded-xl ${modalSize[size]}`}
+      >
         {/* Content */}
         <div
           className="
@@ -81,7 +83,10 @@ const Modal: React.FC<ModalProps> = ({
             {showCloseButton ? (
               <div
                 onClick={handleClose}
-                className="absolute left-4 top-4 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                className="
+                  absolute left-4 top-4 p-2 
+                  hover:bg-gray-100 rounded-full cursor-pointer
+                "
               >
                 <AiOutlineClose size={18} />
               </div>

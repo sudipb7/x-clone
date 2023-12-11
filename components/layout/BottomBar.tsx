@@ -3,10 +3,11 @@ import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaUser, FaRegUser } from "react-icons/fa6";
 import { GoHome, GoHomeFill } from "react-icons/go";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
 import SidebarItem from "./SidebarItem";
 
 const BottomBar = () => {
-  const currentUser = { id: 12 };
+  const { data: currentUser } = useCurrentUser();
 
   const items = [
     {
@@ -32,7 +33,7 @@ const BottomBar = () => {
     },
     {
       label: "Profile",
-      href: `/users/${currentUser?.id}`,
+      href: `/profile/${currentUser?.id}`,
       icon: FaRegUser,
       activeIcon: FaUser,
       auth: true,

@@ -1,13 +1,15 @@
 import { useMemo } from "react";
 import { format } from "date-fns";
 import { BiCalendar } from "react-icons/bi";
+import { SlLocationPin } from "react-icons/sl";
+import { BsBriefcase } from "react-icons/bs";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useEditModal from "@/hooks/useEditModal";
 import useUser from "@/hooks/useUser";
 
 import Button from "../Button";
-import { SlLocationPin } from "react-icons/sl";
-import { BsBriefcase } from "react-icons/bs";
 
 interface UserBioProps {
   userId: string;
@@ -16,6 +18,7 @@ interface UserBioProps {
 const UserBio: React.FC<UserBioProps> = ({ userId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
+  const editModal = useEditModal();
 
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
@@ -32,7 +35,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
           <Button
             variant="outline"
             rounded
-            onClick={() => {}}
+            onClick={editModal.onOpen}
             label="Edit Profile"
           />
         ) : (
@@ -41,7 +44,10 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
       </div>
       <div className="mt-6 px-4">
         <div className="flex flex-col">
-          <p className="text-xl font-semibold">{fetchedUser?.name}</p>
+          <p className="text-xl font-semibold flex items-center gap-1">
+            {fetchedUser?.name}
+            {fetchedUser?.verified && <RiVerifiedBadgeFill color="blue" size={16} />}
+          </p>
           <p className="text-base text-zinc-600">@{fetchedUser?.username}</p>
         </div>
         <div className="flex flex-col mt-3">
