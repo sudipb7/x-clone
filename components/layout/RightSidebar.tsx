@@ -1,3 +1,5 @@
+import FollowBar from "./FollowBar";
+
 const RightSidebar = () => {
   return (
     <div
@@ -9,15 +11,7 @@ const RightSidebar = () => {
         max-md:hidden border-l
       "
     >
-      <div
-        className="
-          flex flex-col items-start justify-center
-          w-full bg-[#F7F9F9] rounded-2xl p-4
-        "
-      >
-        <h2 className="font-semibold text-xl">Who to follow</h2>
-        {/* TODO: Fetch Users and show here */}
-      </div>
+      <FollowBar />
     </div>
   );
 };
