@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import UserHero from "@/components/users/UserHero";
 import UserBio from "@/components/users/UserBio";
 import Meta from "@/components/Meta";
+import PostFeed from "@/components/posts/PostFeed";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const ProfilePage = () => {
       />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} />
+      <PostFeed userId={userId as string} />
     </>
   );
 };

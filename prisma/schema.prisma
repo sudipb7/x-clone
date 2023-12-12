@@ -31,7 +31,7 @@ model Post {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   body          String
   userId        String   @db.ObjectId
-  parentId      String   @db.ObjectId
+  parentId      String?   @db.ObjectId
   likedIds      String[] @db.ObjectId
   bookmarkedIds String[] @db.ObjectId
   replies       String[] @db.ObjectId
