@@ -19,19 +19,19 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
+  const { hasLiked, toggleLike } = useLike({ postId: data?.id, userId });
 
   const goToUser = useCallback(
     (event: any) => {
       event.stopPropagation();
       router.push(`/profile/${data.user.id}`);
     },
-    [router, data.user.id]
+    [router, data?.user?.id]
   );
 
   const goToPost = useCallback(() => {
-    router.push(`/posts/${data.id}`);
-  }, [router, data.id]);
+    router.push(`/posts/${data?.id}`);
+  }, [router, data?.id]);
 
   const onLike = useCallback(
     (event: any) => {
@@ -46,7 +46,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   );
 
   const createdAt = useMemo(() => {
-    if (!data.createdAt) {
+    if (!data?.createdAt) {
       return null;
     }
 
@@ -66,24 +66,24 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
       "
     >
       <div className="flex flex-row items-start gap-3">
-        <Avatar userId={data.user.id} />
+        <Avatar userId={data?.user?.id} />
         <div className="flex-1">
           <div className="flex flex-row items-center gap-2">
             <p
               onClick={goToUser}
               className="font-semibold cursor-pointer hover:underline"
             >
-              {data.user.name}
+              {data?.user?.name}
             </p>
             <span
               onClick={goToUser}
               className="text-zinc-500 cursor-pointer hover:underline"
             >
-              @{data.user.username}
+              @{data?.user?.username}
             </span>
             <span className="text-zinc-400 text-sm">{createdAt}</span>
           </div>
-          <div className="mt-1">{data.body}</div>
+          <div className="mt-1">{data?.body}</div>
           <div className="flex flex-row items-center mt-3 gap-10">
             <div
               className="
@@ -98,10 +98,10 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               "
             >
               <AiOutlineMessage size={20} />
-              <p>{data.replies?.length || 0}</p>
+              <p>{data?.replies?.length || 0}</p>
             </div>
             <div
-              onClick={onLike}
+              onClick={data.isComment ? goToPost : toggleLike}
               className="
                 flex 
                 flex-row 
@@ -114,7 +114,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               "
             >
               <LikeIcon size={20} color={hasLiked ? "red" : ""} />
-              <p>{data.likedIds?.length || 0}</p>
+              <p>{data?.likedIds?.length || 0}</p>
             </div>
           </div>
         </div>
