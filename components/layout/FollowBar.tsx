@@ -1,17 +1,13 @@
 import { useMemo } from "react";
-import { useRouter } from "next/router";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 import useUsers from "@/hooks/useUsers";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
-import Avatar from "../Avatar";
-import Button from "../Button";
+import UserCard from "../UserCard";
 
 const FollowBar = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUsers = [] } = useUsers();
-  const router = useRouter();
 
   const users = useMemo(() => {
     if (!currentUser) {
@@ -32,7 +28,7 @@ const FollowBar = () => {
     <div
       className="
         flex flex-col items-start justify-center
-        w-full bg-[#F7F9F9] rounded-2xl p-4
+        w-full bg-[#F7F9F9] rounded-2xl p-4 max-lg:hidden
       "
     >
       <h2 className="font-semibold text-xl mb-2">Who to follow</h2>
@@ -42,38 +38,14 @@ const FollowBar = () => {
           justify-center w-full gap-3
         "
       >
-        {users.map((user: Record<any, string>) => (
-          <div
+        {users.map((user: Record<string, any>) => (
+          <UserCard
             key={user.id}
-            className="w-full px-2 flex flex-row justify-between items-center"
-          >
-            <div
-              onClick={() => router.push(`/profile/${user.id}`)}
-              className="flex flex-row gap-3 items-center"
-            >
-              <Avatar userId={user.id} />
-              <div className="flex flex-col cursor-pointer">
-                <p 
-                  className="
-                    flex items-center gap-0.5
-                    font-medium text-sm hover:underline
-                  "
-                >
-                  {user.name}
-                  {user.verified && <RiVerifiedBadgeFill color="blue" size={14} />}
-                </p>
-                <span className="font-light text-xs">
-                  @{user.username}
-                </span>
-              </div>
-            </div>
-            <Button 
-              rounded 
-              label="Follow" 
-              size="small" 
-              onClick={() => {}} 
-            />
-          </div>
+            id={user.id}
+            name={user.name}
+            username={user.username}
+            verified={user.verified as boolean}
+          />
         ))}
       </div>
     </div>

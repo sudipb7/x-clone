@@ -23,17 +23,11 @@ const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
         border-b p-3.5
       "
     >
-      <div className="flex flex-row items-center gap-6">
+      <div className="flex flex-row items-center gap-5">
         {showBackArrow && (
-          <BiArrowBack
-            onClick={handleBack}
-            size={20}
-            className="
-              cursor-pointer
-              hover:opacity-70
-              transition
-            "
-          />
+          <div className="p-2.5 rounded-full hover:bg-gray-100 cursor-pointer">
+            <BiArrowBack onClick={handleBack} size={20} />
+          </div>
         )}
         <div className="flex flex-col">
           <h1 className="text-xl font-semibold">{label}</h1>

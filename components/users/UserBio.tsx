@@ -5,6 +5,7 @@ import { SlLocationPin } from "react-icons/sl";
 import { BsBriefcase } from "react-icons/bs";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 
+import useFollow from "@/hooks/useFollow";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useEditModal from "@/hooks/useEditModal";
 import useUser from "@/hooks/useUser";
@@ -18,6 +19,7 @@ interface UserBioProps {
 const UserBio: React.FC<UserBioProps> = ({ userId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
+  const { toggleFollow, isFollowing } = useFollow(userId);
   const editModal = useEditModal();
 
   const createdAt = useMemo(() => {
@@ -39,14 +41,21 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
             label="Edit Profile"
           />
         ) : (
-          <Button variant="primary" rounded onClick={() => {}} label="Follow" />
+          <Button
+            variant={isFollowing ? "secondary" : "primary"}
+            rounded
+            onClick={toggleFollow}
+            label={isFollowing ? "Unfollow" : "Follow"}
+          />
         )}
       </div>
       <div className="mt-6 px-4">
         <div className="flex flex-col">
           <p className="text-xl font-semibold flex items-center gap-1">
             {fetchedUser?.name}
-            {fetchedUser?.verified && <RiVerifiedBadgeFill color="blue" size={16} />}
+            {fetchedUser?.verified && (
+              <RiVerifiedBadgeFill color="blue" size={16} />
+            )}
           </p>
           <p className="text-base text-zinc-600">@{fetchedUser?.username}</p>
         </div>

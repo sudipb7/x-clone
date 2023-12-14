@@ -49,6 +49,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
           </div>
           <div className="flex-1">
             <textarea
+              rows={3}
               disabled={isLoading}
               onChange={(e) => setBody(e.target.value)}
               value={body}
