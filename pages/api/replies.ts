@@ -11,26 +11,25 @@ export default async function handler(
   }
 
   try {
-    const { postId } = req.query;
+    const { parentId } = req.query;
 
-    if (!postId || typeof postId !== "string") {
+    if (!parentId || typeof parentId !== "string") {
       throw new Error("Invalid ID");
     }
 
-    const post = await prisma.post.findUnique({
+    const replies = await prisma.post.findMany({
       where: {
-        id: postId,
+        parentId,
       },
       include: {
         user: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
-    if (!post) {
-      throw new Error("Invalid ID");
-    }
-
-    return res.status(200).json(post);
+    return res.status(200).json(replies);
   } catch (error) {
     console.log(error);
     return res.status(400).end();

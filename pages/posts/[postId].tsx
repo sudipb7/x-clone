@@ -5,7 +5,8 @@ import usePost from "@/hooks/usePost";
 import Form from "@/components/Form";
 import Header from "@/components/Header";
 import PostItem from "@/components/posts/PostItem";
-import CommentFeed from "@/components/posts/CommentFeed";
+import ReplyFeed from "@/components/posts/ReplyFeed";
+import Meta from "@/components/Meta";
 
 const PostView = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const PostView = () => {
 
   return (
     <>
+      <Meta title={`${fetchedPost?.user?.name} on X: "${fetchedPost?.body}"`} />
       <Header showBackArrow label="Tweet" />
       <PostItem data={fetchedPost} />
       <Form
@@ -22,7 +24,7 @@ const PostView = () => {
         isComment
         placeholder="Tweet your reply"
       />
-      <CommentFeed replies={fetchedPost?.replies} />
+      <ReplyFeed postId={postId as string} />
     </>
   );
 };

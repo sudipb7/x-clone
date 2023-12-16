@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import usePosts from "@/hooks/usePosts";
 import usePost from "@/hooks/usePost";
+import useReplies from "@/hooks/useReplies";
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
@@ -24,6 +25,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutatePosts } = usePosts();
   const { mutate: mutatePost } = usePost(postId as string);
+  const { mutate: mutateReplies } = useReplies(postId as string);
 
   const [body, setBody] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,12 +39,15 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
       setBody("");
       mutatePosts();
       mutatePost();
+      if (isComment) {
+        mutateReplies();
+      }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts, mutatePost, isComment, postId]);
+  }, [body, mutatePosts, mutatePost, isComment, postId, mutateReplies]);
 
   return (
     <div className="border-b px-5 py-2">

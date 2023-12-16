@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
       className="
         sticky top-0 left-0 
         bg-white bg-opacity-20 backdrop-blur-2xl 
-        border-b p-3.5
+        border-b p-3.5 z-10
       "
     >
       <div className="flex flex-row items-center gap-5">

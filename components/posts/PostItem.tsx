@@ -8,6 +8,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 import Avatar from "../Avatar";
+import usePost from "@/hooks/usePost";
 
 interface PostItemProps {
   data: Record<string, any>;
@@ -19,7 +20,12 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { hasLiked, toggleLike } = useLike({ postId: data?.id, userId });
+  const { data: parentPost } = usePost(data?.parentId);
+  const { hasLiked, toggleLike } = useLike({
+    postId: data?.id,
+    userId,
+    parentId: data?.parentId,
+  });
 
   const goToUser = useCallback(
     (event: any) => {
@@ -27,6 +33,14 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
       router.push(`/profile/${data.user.id}`);
     },
     [router, data?.user?.id]
+  );
+
+  const goToParentPost = useCallback(
+    (event: any) => {
+      event.stopPropagation();
+      router.push(`/posts/${parentPost.id}`);
+    },
+    [router, parentPost?.id]
   );
 
   const goToPost = useCallback(() => {
@@ -83,6 +97,17 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
             </span>
             <span className="text-zinc-400 text-sm">{createdAt}</span>
           </div>
+          {parentPost && (
+            <div className="text-zinc-600 text-sm">
+              Replying to{" "}
+              <span
+                onClick={goToParentPost}
+                className="text-sky-500 hover:underline"
+              >
+                @{parentPost?.user?.username}
+              </span>
+            </div>
+          )}
           <div className="mt-1">{data?.body}</div>
           <div className="flex flex-row items-center mt-3 gap-10">
             <div
@@ -101,7 +126,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               <p>{data?.replies?.length || 0}</p>
             </div>
             <div
-              onClick={data.isComment ? goToPost : toggleLike}
+              onClick={onLike}
               className="
                 flex 
                 flex-row 
@@ -113,7 +138,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                 hover:text-red-500
               "
             >
-              <LikeIcon size={20} color={hasLiked ? "red" : ""} />
+              <LikeIcon size={20} color={hasLiked ? "#F91880" : ""} />
               <p>{data?.likedIds?.length || 0}</p>
             </div>
           </div>

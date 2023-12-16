@@ -6,11 +6,21 @@ import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import usePost from "./usePost";
 import usePosts from "./usePosts";
+import useReplies from "./useReplies";
 
-const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
+const useLike = ({
+  postId,
+  userId,
+  parentId,
+}: {
+  postId: string;
+  userId?: string;
+  parentId?: string;
+}) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
+  const { mutate: mutateReplies } = useReplies(parentId);
 
   const loginModal = useLoginModal();
 
@@ -37,6 +47,9 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
       await request();
       mutateFetchedPost();
       mutateFetchedPosts();
+      if (parentId) {
+        mutateReplies();
+      }
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -47,6 +60,8 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
     mutateFetchedPost,
     mutateFetchedPosts,
     loginModal,
+    parentId,
+    mutateReplies,
   ]);
 
   return {
