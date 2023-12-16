@@ -53,13 +53,23 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       onClick={handleClick}
       className={`
         flex items-center justify-start 
-        gap-3 p-4 lg:px-6 lg:py-3
+        gap-3 p-2 sm:p-4 lg:px-6 lg:py-3
         cursor-pointer rounded-full
         hover:bg-gray-100
         ${isActive ? "font-semibold text-black" : "text-black/80"}
       `}
     >
-      {isActive && ActiveIcon ? <ActiveIcon size={25} /> : <Icon size={25} />}
+      {isActive && ActiveIcon ? (
+        <span>
+          <ActiveIcon className="max-sm:hidden" size={25} />
+          <ActiveIcon className="sm:hidden" size={18} />
+        </span>
+      ) : (
+        <span>
+          <Icon className="max-sm:hidden" size={25} />
+          <Icon className="sm:hidden" size={18} />
+        </span>
+      )}
       <p className="max-lg:hidden mr-2 text-lg">{label}</p>
     </div>
   );

@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <RegisterModal />
       <div className="flex flex-row justify-center">
         <LeftSidebar />
-        <div className="relative flex-1 max-w-[650px]">
+        <div className="relative flex-1 max-w-[650px] max-sm:pb-[3.1rem]">
           <Component {...pageProps} />
         </div>
         <RightSidebar />
