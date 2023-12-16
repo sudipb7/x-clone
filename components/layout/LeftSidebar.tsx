@@ -29,7 +29,7 @@ const LeftSidebar = () => {
       icon: BsBell,
       activeIcon: BsBellFill,
       auth: true,
-      alert: false,
+      alert: currentUser?.hasNotification,
     },
     {
       label: "Bookmarks",

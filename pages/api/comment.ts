@@ -50,6 +50,28 @@ export default async function handler(
       },
     });
 
+    // Send Notification
+    try {
+      await prisma.notification.create({
+        data: {
+          body: `${currentUser.name} replied to your post`,
+          userId: originalPost.userId,
+          redirectUrl: `/posts/${comment.id}`,
+        },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: originalPost.userId,
+        },
+        data: {
+          hasNotification: true,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     return res.status(200).json({ comment, updatedPost });
   } catch (error) {
     console.log(error);

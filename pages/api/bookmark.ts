@@ -58,6 +58,28 @@ export default async function handler(
 
     if (req.method === "POST") {
       updatedBookmarkedIds.push(currentUser.id);
+
+      // Send Notification
+      try {
+        await prisma.notification.create({
+          data: {
+            body: `${currentUser.name} bookmarked your post`,
+            userId: post.userId,
+            redirectUrl: `/posts/${post.id}`,
+          },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: post.userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     if (req.method === "DELETE") {
