@@ -4,11 +4,13 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { AiOutlineHeart, AiOutlineMessage, AiFillHeart } from "react-icons/ai";
 
 import useLike from "@/hooks/useLike";
+import useBookmark from "@/hooks/useBookmark";
 import useLoginModal from "@/hooks/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 import Avatar from "../Avatar";
 import usePost from "@/hooks/usePost";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 
 interface PostItemProps {
   data: Record<string, any>;
@@ -22,6 +24,11 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: parentPost } = usePost(data?.parentId);
   const { hasLiked, toggleLike } = useLike({
+    postId: data?.id,
+    userId,
+    parentId: data?.parentId,
+  });
+  const { isBookmarked, toggleBookmark } = useBookmark({
     postId: data?.id,
     userId,
     parentId: data?.parentId,
@@ -59,6 +66,18 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
     [loginModal, toggleLike, currentUser]
   );
 
+  const onBookmark = useCallback(
+    (event: any) => {
+      event.stopPropagation();
+      if (!currentUser) {
+        return loginModal.onOpen();
+      }
+
+      toggleBookmark();
+    },
+    [loginModal, toggleBookmark, currentUser]
+  );
+
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
       return null;
@@ -69,14 +88,16 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
 
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
+  const BookmarkIcon = isBookmarked ? IoBookmark : IoBookmarkOutline;
+
   return (
     <div
       onClick={goToPost}
       className="
         border-b
-        p-4
+        p-4 max-sm:p-3
         cursor-pointer
-        hover:bg-gray-100/50
+        hover:bg-gray-100/30
       "
     >
       <div className="flex flex-row items-start gap-3">
@@ -108,8 +129,8 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               </span>
             </div>
           )}
-          <div className="mt-1">{data?.body}</div>
-          <div className="flex flex-row items-center mt-3 gap-10">
+          <div className="mt-0.5 max-sm:text-sm">{data?.body}</div>
+          <div className="flex flex-row items-center mt-2 gap-10">
             <div
               className="
                 flex 
@@ -122,8 +143,8 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                 hover:text-sky-500
               "
             >
-              <AiOutlineMessage size={20} />
-              <p>{data?.replies?.length || 0}</p>
+              <AiOutlineMessage size={18} />
+              <p className="max-sm:text-sm">{data?.replies?.length || 0}</p>
             </div>
             <div
               onClick={onLike}
@@ -138,8 +159,26 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                 hover:text-red-500
               "
             >
-              <LikeIcon size={20} color={hasLiked ? "#F91880" : ""} />
-              <p>{data?.likedIds?.length || 0}</p>
+              <LikeIcon size={18} color={hasLiked ? "#F91880" : ""} />
+              <p className="max-sm:text-sm">{data?.likedIds?.length || 0}</p>
+            </div>
+            <div
+              onClick={onBookmark}
+              className="
+                flex 
+                flex-row 
+                items-center 
+                text-neutral-500 
+                gap-2 
+                cursor-pointer 
+                transition 
+                hover:text-sky-500
+              "
+            >
+              <BookmarkIcon size={18} color={isBookmarked ? "#0EA5E9" : ""} />
+              <p className="max-sm:text-sm">
+                {data?.bookmarkedIds?.length || 0}
+              </p>
             </div>
           </div>
         </div>
