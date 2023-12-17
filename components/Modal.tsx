@@ -67,7 +67,7 @@ const Modal: React.FC<ModalProps> = ({
      "
     >
       <div
-        className={`bg-white relative mx-auto border rounded-xl ${modalSize[size]}`}
+        className={`bg-white relative mx-auto border rounded-xl overflow-hidden ${modalSize[size]}`}
       >
         {/* Content */}
         <div

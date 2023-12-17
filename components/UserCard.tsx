@@ -37,7 +37,7 @@ const UserCard: React.FC<UserCardProps> = ({
             "
           >
             {name}
-            {verified && <RiVerifiedBadgeFill color="blue" size={14} />}
+            {verified && <RiVerifiedBadgeFill color="#0EA5E9" size={14} />}
           </p>
           <span className="font-light text-xs">@{username}</span>
         </div>

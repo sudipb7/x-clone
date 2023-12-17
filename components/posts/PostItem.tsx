@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { AiOutlineHeart, AiOutlineMessage, AiFillHeart } from "react-icons/ai";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 import useLike from "@/hooks/useLike";
 import useBookmark from "@/hooks/useBookmark";
@@ -103,12 +104,18 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
       <div className="flex flex-row items-start gap-3">
         <Avatar userId={data?.user?.id} />
         <div className="flex-1">
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-1.5">
             <p
               onClick={goToUser}
-              className="font-semibold cursor-pointer hover:underline"
+              className="
+                font-semibold cursor-pointer hover:underline 
+                flex flex-row items-center gap-1
+              "
             >
               {data?.user?.name}
+              {data?.user?.verified && (
+                <RiVerifiedBadgeFill color="#0EA5E9" size={16} />
+              )}
             </p>
             <span
               onClick={goToUser}

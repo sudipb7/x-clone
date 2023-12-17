@@ -54,7 +54,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
           <p className="text-xl font-semibold flex items-center gap-1">
             {fetchedUser?.name}
             {fetchedUser?.verified && (
-              <RiVerifiedBadgeFill color="blue" size={16} />
+              <RiVerifiedBadgeFill color="#0EA5E9" size={16} />
             )}
           </p>
           <p className="text-base text-zinc-600">@{fetchedUser?.username}</p>
