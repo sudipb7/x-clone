@@ -47,6 +47,10 @@ const useBookmark = ({
       }
 
       await request();
+
+      if (!isBookmarked) {
+        toast.success("Post added to your bookmarks");
+      }
       mutateFetchedPost();
       mutateFetchedPosts();
       mutateFetchedBookmarks();
