@@ -2,18 +2,19 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useCallback } from "react";
 import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import { IoMdTrash } from "react-icons/io";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useNotifications from "@/hooks/useNotifications";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 import Header from "@/components/Header";
 import Meta from "@/components/Meta";
 import NotificationsFeed from "@/components/NotificationsFeed";
 
 export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
     return {
@@ -26,7 +27,13 @@ export async function getServerSideProps(context: NextPageContext) {
 
   return {
     props: {
-      session,
+      session: {
+        ...session,
+        user: {
+          ...session?.user,
+          ...(session?.user?.image === undefined && { image: null }),
+        },
+      },
     },
   };
 }
