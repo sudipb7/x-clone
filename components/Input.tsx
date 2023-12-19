@@ -9,7 +9,7 @@ interface InputProps {
 const Input: React.FC<InputProps> = ({
   placeholder,
   value,
-  type,
+  type = "text",
   disabled,
   onChange,
 }) => {
@@ -20,6 +20,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         disabled={disabled}
         onChange={onChange}
+        placeholder=" "
         className="
         peer
         w-full px-2.5 pb-1.5 pt-5 z-10
@@ -32,9 +33,15 @@ const Input: React.FC<InputProps> = ({
       />
       <label
         className="
-          absolute top-1.5 left-2.5 
-          text-gray-400 text-xs 
+          absolute top-3.5 left-[0.7rem] 
+          transform origin-[0]
+          -translate-y-3.5 scale-75
+          text-zinc-500 duration-300
           peer-focus:text-sky-500
+          peer-focus:scale-75
+          peer-focus:-translate-y-3.5
+          peer-placeholder-shown:scale-100 
+          peer-placeholder-shown:translate-y-0  
         "
       >
         {placeholder}
