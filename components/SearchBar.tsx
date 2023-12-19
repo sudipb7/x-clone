@@ -15,7 +15,7 @@ const SearchBar = () => {
   const divStyle = fetchedUsers && debouncedValue ? { display: "flex" } : { display: "none" };
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative max-lg:hidden">
       <input
         type="text"
         name="search"
@@ -28,6 +28,7 @@ const SearchBar = () => {
           outline-none focus:outline-none
           bg-gray-100 focus:bg-white
           focus:ring-1 focus:ring-sky-500
+          max-lg:hidden
         "
       />
       <BsSearch

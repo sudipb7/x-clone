@@ -4,7 +4,7 @@ import { IconType } from "react-icons";
 import { BsDot } from "react-icons/bs";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useLoginModal from "@/hooks/useLoginModal";
+import useLoginModal from "@/hooks/modals/useLoginModal";
 
 interface SidebarItemProps {
   label: string;

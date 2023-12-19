@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 
 import useVerify from "@/hooks/useVerify";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useVerifyModal from "@/hooks/useVerifyModal";
+import useVerifyModal from "@/hooks/modals/useVerifyModal";
 
 import Modal from "../Modal";
 

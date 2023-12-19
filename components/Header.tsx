@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
       className="
         sticky top-0 left-0 
         bg-white bg-opacity-20 backdrop-blur-2xl 
-        border-b p-3.5 z-10
+        border-b px-3 py-1.5 z-10
       "
     >
       <div className="flex flex-row items-center gap-5">
@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
           </div>
         )}
         <div className="flex flex-col">
-          <h1 className="text-xl font-semibold">{label}</h1>
+          <h1 className="text-lg font-semibold">{label}</h1>
           {secLabel ? (
             <h4 className="text-xs font-light text-black/70">{secLabel}</h4>
           ) : null}

@@ -29,7 +29,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder }) => {
     <div
       className={`
         ${hasBorder ? "border-4 border-white" : ""}
-        ${isLarge ? "h-32 w-32" : "h-10 w-10"}
+        ${isLarge ? "h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32" : "h-10 w-10"}
         relative rounded-full
         hover:brightness-105
         cursor-pointer

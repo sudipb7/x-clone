@@ -6,8 +6,8 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import usePosts from "@/hooks/usePosts";
 import usePost from "@/hooks/usePost";
 import useReplies from "@/hooks/useReplies";
-import useLoginModal from "@/hooks/useLoginModal";
-import useRegisterModal from "@/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/modals/useLoginModal";
+import useRegisterModal from "@/hooks/modals/useRegisterModal";
 
 import Button from "./Button";
 import Avatar from "./Avatar";
@@ -50,7 +50,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   }, [body, mutatePosts, mutatePost, isComment, postId, mutateReplies]);
 
   return (
-    <div className="border-b px-5 py-2">
+    <div className="border-b p-3 md:px-4">
       {currentUser ? (
         <div className="flex flex-row gap-4">
           <div>
@@ -65,7 +65,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
               className="
                 disabled:opacity-80
                 peer
-                resize-none
+                resize-y
                 mt-1
                 w-full
                 ring-0

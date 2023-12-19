@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback } from "react";
-import { signOut } from "next-auth/react";
 
 import { IoIosLogOut } from "react-icons/io";
 import { BsBell, BsBellFill } from "react-icons/bs";
@@ -10,7 +8,8 @@ import { FaUser, FaRegUser, FaXTwitter } from "react-icons/fa6";
 import { GoHome, GoHomeFill } from "react-icons/go";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useVerifyModal from "@/hooks/useVerifyModal";
+import useVerifyModal from "@/hooks/modals/useVerifyModal";
+import useLogoutModal from "@/hooks/modals/useLogoutModal";
 
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
@@ -18,6 +17,7 @@ import SidebarTweetButton from "./SidebarTweetButton";
 const LeftSidebar = () => {
   const { data: currentUser } = useCurrentUser();
   const verifyModal = useVerifyModal();
+  const logoutModal = useLogoutModal();
 
   const items = [
     {
@@ -49,10 +49,6 @@ const LeftSidebar = () => {
       auth: true,
     },
   ];
-
-  const openPremiumModal = useCallback(() => {
-
-  }, []);
 
   return (
     <div
@@ -97,13 +93,13 @@ const LeftSidebar = () => {
 
         {currentUser ? (
           <>
-            <SidebarItem 
-              onClick={verifyModal.onOpen} 
-              icon={FaXTwitter} 
-              label="Premium" 
+            <SidebarItem
+              onClick={verifyModal.onOpen}
+              icon={FaXTwitter}
+              label="Premium"
             />
             <SidebarItem
-              onClick={() => signOut()}
+              onClick={logoutModal.onOpen}
               icon={IoIosLogOut}
               label="Logout"
             />

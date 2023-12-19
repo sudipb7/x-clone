@@ -7,7 +7,7 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 import useFollow from "@/hooks/useFollow";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useEditModal from "@/hooks/useEditModal";
+import useEditModal from "@/hooks/modals/useEditModal";
 import useUser from "@/hooks/useUser";
 
 import Button from "../Button";
@@ -51,32 +51,34 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
       </div>
       <div className="mt-6 px-4">
         <div className="flex flex-col">
-          <p className="text-xl font-semibold flex items-center gap-1">
+          <p className="sm:text-lg md:text-xl font-semibold flex items-center gap-1">
             {fetchedUser?.name}
             {fetchedUser?.verified && (
               <RiVerifiedBadgeFill color="#0EA5E9" size={16} />
             )}
           </p>
-          <p className="text-base text-zinc-600">@{fetchedUser?.username}</p>
+          <p className="text-xs sm:text-base text-zinc-600">
+            @{fetchedUser?.username}
+          </p>
         </div>
-        <div className="flex flex-col mt-3">
+        <div className="flex flex-col mt-1.5 lg:mt-3 max-sm:text-sm">
           <p>{fetchedUser?.bio}</p>
-          <div className="flex items-center flex-wrap gap-2.5 mt-2">
+          <div className="flex items-center flex-wrap gap-1.5 md:gap-2 lg:gap-2.5 mt-2">
             {fetchedUser?.location && (
               <div className="flex flex-row items-center gap-1 text-zinc-500">
-                <SlLocationPin size={16} />
-                <p className="text-sm">{fetchedUser?.location}</p>
+                <SlLocationPin size={15} />
+                <p className="text-xs md:text-sm">{fetchedUser?.location}</p>
               </div>
             )}
             {fetchedUser?.profession && (
               <div className="flex flex-row items-center gap-1 text-zinc-500">
-                <BsBriefcase size={16} />
-                <p className="text-sm">{fetchedUser?.profession}</p>
+                <BsBriefcase size={15} />
+                <p className="text-xs md:text-sm">{fetchedUser?.profession}</p>
               </div>
             )}
             <div className="flex flex-row items-center gap-1 text-zinc-500">
-              <BiCalendar size={16} />
-              <p className="text-sm">Joined {createdAt}</p>
+              <BiCalendar size={15} />
+              <p className="text-xs md:text-sm">Joined {createdAt}</p>
             </div>
           </div>
         </div>

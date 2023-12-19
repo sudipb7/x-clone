@@ -1,17 +1,19 @@
+import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { AiOutlineHeart, AiOutlineMessage, AiFillHeart } from "react-icons/ai";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import { MdOutlineContentCopy } from "react-icons/md";
 
 import useLike from "@/hooks/useLike";
 import useBookmark from "@/hooks/useBookmark";
-import useLoginModal from "@/hooks/useLoginModal";
+import useLoginModal from "@/hooks/modals/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import usePost from "@/hooks/usePost";
 
 import Avatar from "../Avatar";
-import usePost from "@/hooks/usePost";
-import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 
 interface PostItemProps {
   data: Record<string, any>;
@@ -79,12 +81,26 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
     [loginModal, toggleBookmark, currentUser]
   );
 
+  const onShare = useCallback(
+    (event: any) => {
+      event.stopPropagation();
+      let hostUrl = "http://localhost:3000";
+      if (process.env.NODE_ENV === "production") {
+        hostUrl = process.env.HOST_URL as string;
+      }
+      navigator.clipboard.writeText(`${hostUrl}/posts/${data.id}`);
+      toast.success("Link copied");
+    },
+    [data?.id]
+  );
+
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
       return null;
     }
 
-    return formatDistanceToNowStrict(new Date(data.createdAt));
+    let arr = formatDistanceToNowStrict(new Date(data.createdAt)).split(" ");
+    return `${arr[0]}${arr[1].slice(0, 1)}`;
   }, [data?.createdAt]);
 
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
@@ -104,12 +120,12 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
       <div className="flex flex-row items-start gap-3">
         <Avatar userId={data?.user?.id} />
         <div className="flex-1">
-          <div className="flex flex-row items-center gap-1.5">
+          <div className="flex flex-row items-center gap-1 md:gap-1.5">
             <p
               onClick={goToUser}
               className="
                 font-semibold cursor-pointer hover:underline 
-                flex flex-row items-center gap-1
+                flex flex-row items-center gap-1 max-sm:text-sm
               "
             >
               {data?.user?.name}
@@ -119,7 +135,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
             </p>
             <span
               onClick={goToUser}
-              className="text-zinc-500 cursor-pointer hover:underline"
+              className="max-sm:text-sm text-zinc-500 cursor-pointer hover:underline"
             >
               @{data?.user?.username}
             </span>
@@ -137,21 +153,23 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
             </div>
           )}
           <div className="mt-0.5 max-sm:text-sm">{data?.body}</div>
-          <div className="flex flex-row items-center mt-2 gap-10">
+          <div className="flex flex-row items-center justify-between mt-1.5 pr-10">
             <div
               className="
                 flex 
                 flex-row 
                 items-center 
-                text-neutral-500 
+                text-zinc-700 
                 gap-2 
                 cursor-pointer 
                 transition 
                 hover:text-sky-500
               "
             >
-              <AiOutlineMessage size={18} />
-              <p className="max-sm:text-sm">{data?.replies?.length || 0}</p>
+              <AiOutlineMessage size={16} />
+              <p className="max-sm:text-xs text-sm">
+                {data?.replies?.length || 0}
+              </p>
             </div>
             <div
               onClick={onLike}
@@ -159,15 +177,17 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                 flex 
                 flex-row 
                 items-center 
-                text-neutral-500 
+                text-zinc-700 
                 gap-2 
                 cursor-pointer 
                 transition 
                 hover:text-red-500
               "
             >
-              <LikeIcon size={18} color={hasLiked ? "#F91880" : ""} />
-              <p className="max-sm:text-sm">{data?.likedIds?.length || 0}</p>
+              <LikeIcon size={16} color={hasLiked ? "#F91880" : ""} />
+              <p className="max-sm:text-xs text-sm">
+                {data?.likedIds?.length || 0}
+              </p>
             </div>
             <div
               onClick={onBookmark}
@@ -175,17 +195,23 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
                 flex 
                 flex-row 
                 items-center 
-                text-neutral-500 
+                text-zinc-700 
                 gap-2 
                 cursor-pointer 
                 transition 
                 hover:text-sky-500
               "
             >
-              <BookmarkIcon size={18} color={isBookmarked ? "#0EA5E9" : ""} />
-              <p className="max-sm:text-sm">
+              <BookmarkIcon size={16} color={isBookmarked ? "#0EA5E9" : ""} />
+              <p className="max-sm:text-xs text-sm">
                 {data?.bookmarkedIds?.length || 0}
               </p>
+            </div>
+            <div
+              onClick={onShare}
+              className="text-zinc-700 hover:text-green-500"
+            >
+              <MdOutlineContentCopy size={16} />
             </div>
           </div>
         </div>

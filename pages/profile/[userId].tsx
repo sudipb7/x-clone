@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+
 import useUser from "@/hooks/useUser";
 
 import Header from "@/components/Header";
@@ -10,12 +12,18 @@ import PostFeed from "@/components/posts/PostFeed";
 const ProfilePage = () => {
   const router = useRouter();
   const { userId } = router.query;
-
+  const [title, setTitle] = useState("Profile | X");
   const { data: fetchedUser, isLoading } = useUser(userId as string);
+
+  useEffect(() => {
+    if (fetchedUser?.name) {
+      setTitle(`${fetchedUser?.name} (@${fetchedUser?.username}) | X`);
+    }
+  }, [fetchedUser?.name, fetchedUser?.username]);
 
   return (
     <>
-      <Meta title={`${fetchedUser?.name} (@${fetchedUser?.username}) | X`} />
+      <Meta title={title} />
       <Header
         label={fetchedUser?.name}
         secLabel={`${fetchedUser?.posts?.length || 0} posts`}

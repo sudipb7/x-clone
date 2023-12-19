@@ -103,7 +103,11 @@ const Modal: React.FC<ModalProps> = ({
             <h3 className="text-2xl font-semibold">{title}</h3>
           </div>
           {/* Body */}
-          <div className="relative flex-auto mt-3">{body}</div>
+          <div
+            className={`relative flex-auto ${size === "sm" ? "mt-1" : "mt-3"}`}
+          >
+            {body}
+          </div>
           {/* Footer */}
           <div className="flex flex-col items-center justify-center gap-2 mt-3">
             <Button

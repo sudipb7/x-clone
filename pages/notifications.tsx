@@ -15,7 +15,7 @@ import NotificationsFeed from "@/components/NotificationsFeed";
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
 
-  if (!session) {
+  if (!session?.user) {
     return {
       redirect: {
         destination: "/",

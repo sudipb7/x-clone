@@ -11,6 +11,7 @@ import LoginModal from "@/components/modals/LoginModal";
 import RegisterModal from "@/components/modals/RegisterModal";
 import EditModal from "@/components/modals/EditModal";
 import VerifyModal from "@/components/modals/VerifyModal";
+import LogoutModal from "@/components/modals/LogoutModal";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <EditModal />
       <LoginModal />
       <RegisterModal />
+      <LogoutModal />
       <div className="flex flex-row justify-center">
         <LeftSidebar />
         <div className="relative flex-1 max-w-[650px] max-sm:pb-[3.1rem]">

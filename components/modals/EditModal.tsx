@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import useUser from "@/hooks/useUser";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useEditModal from "@/hooks/useEditModal";
+import useEditModal from "@/hooks/modals/useEditModal";
 
 import Modal from "../Modal";
 import Input from "../Input";

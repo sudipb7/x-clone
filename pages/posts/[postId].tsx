@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import usePost from "@/hooks/usePost";
@@ -11,12 +12,18 @@ import Meta from "@/components/Meta";
 const PostView = () => {
   const router = useRouter();
   const { postId } = router.query;
-
+  const [title, setTitle] = useState("Post | X");
   const { data: fetchedPost } = usePost(postId as string);
+
+  useEffect(() => {
+    if (fetchedPost?.body) {
+      setTitle(`${fetchedPost?.user?.name} on X: "${fetchedPost?.body}"`);
+    }
+  }, [fetchedPost?.user?.name, fetchedPost?.body]);
 
   return (
     <>
-      <Meta title={`${fetchedPost?.user?.name} on X: "${fetchedPost?.body}"`} />
+      <Meta title={title} />
       <Header showBackArrow label="Tweet" />
       <PostItem data={fetchedPost} />
       <Form
