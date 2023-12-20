@@ -11,6 +11,7 @@ import useRegisterModal from "@/hooks/modals/useRegisterModal";
 
 import Button from "./Button";
 import Avatar from "./Avatar";
+import FormSkeleton from "./skeletons/FormSkeleton";
 
 interface FormProps {
   placeholder: string;
@@ -22,7 +23,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
 
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, isLoading: isFetching } = useCurrentUser();
   const { mutate: mutatePosts } = usePosts();
   const { mutate: mutatePost } = usePost(postId as string);
   const { mutate: mutateReplies } = useReplies(postId as string);
@@ -49,7 +50,9 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
     }
   }, [body, mutatePosts, mutatePost, isComment, postId, mutateReplies]);
 
-  return (
+  return isFetching ? (
+    <FormSkeleton />
+  ) : (
     <div className="border-b p-3 md:px-4">
       {currentUser ? (
         <div className="flex flex-row gap-4">

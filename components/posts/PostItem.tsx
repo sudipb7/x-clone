@@ -25,7 +25,9 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { data: parentPost } = usePost(data?.parentId);
+  const { data: parentPost } = usePost(
+    data?.parentId
+  );
   const { hasLiked, toggleLike } = useLike({
     postId: data?.id,
     userId,
@@ -84,10 +86,10 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const onShare = useCallback(
     (event: any) => {
       event.stopPropagation();
-      let hostUrl = "http://localhost:3000";
-      if (process.env.NODE_ENV === "production") {
-        hostUrl = process.env.HOST_URL as string;
-      }
+      const hostUrl =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3000"
+          : process.env.NEXT_PUBLIC_BASE_URL;
       navigator.clipboard.writeText(`${hostUrl}/posts/${data.id}`);
       toast.success("Link copied");
     },

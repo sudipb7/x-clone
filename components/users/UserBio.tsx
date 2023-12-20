@@ -49,7 +49,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
           />
         )}
       </div>
-      <div className="mt-6 px-4">
+      <div className="max-sm:mt-2.5 mt-4 px-4">
         <div className="flex flex-col">
           <p className="sm:text-lg md:text-xl font-semibold flex items-center gap-1">
             {fetchedUser?.name}
@@ -61,7 +61,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
             @{fetchedUser?.username}
           </p>
         </div>
-        <div className="flex flex-col mt-1.5 lg:mt-3 max-sm:text-sm">
+        <div className="flex flex-col mt-1.5 lg:mt-2.5 max-sm:text-sm">
           <p>{fetchedUser?.bio}</p>
           <div className="flex items-center flex-wrap gap-1.5 md:gap-2 lg:gap-2.5 mt-2">
             {fetchedUser?.location && (

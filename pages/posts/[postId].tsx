@@ -8,12 +8,13 @@ import Header from "@/components/Header";
 import PostItem from "@/components/posts/PostItem";
 import ReplyFeed from "@/components/posts/ReplyFeed";
 import Meta from "@/components/Meta";
+import PostSkeleton from "@/components/skeletons/PostSkeleton";
 
 const PostView = () => {
   const router = useRouter();
   const { postId } = router.query;
   const [title, setTitle] = useState("Post | X");
-  const { data: fetchedPost } = usePost(postId as string);
+  const { data: fetchedPost, isLoading } = usePost(postId as string);
 
   useEffect(() => {
     if (fetchedPost?.body) {
@@ -25,7 +26,7 @@ const PostView = () => {
     <>
       <Meta title={title} />
       <Header showBackArrow label="Tweet" />
-      <PostItem data={fetchedPost} />
+      {isLoading ? <PostSkeleton /> : <PostItem data={fetchedPost} />}
       <Form
         postId={postId as string}
         isComment

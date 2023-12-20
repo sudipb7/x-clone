@@ -14,3 +14,20 @@ body {
   font-family: "Inter", sans-serif;
   transition: all 0.3s ease-in-out;
 }
+
+@layer utilities {
+  .skeleton {
+    animation: shimmerEffect 1.5s infinite;
+    background: linear-gradient(-90deg, #e8e8e8 25%, #f8f8f8 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+  }
+
+  @keyframes shimmerEffect {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

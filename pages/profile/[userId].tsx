@@ -8,6 +8,7 @@ import UserHero from "@/components/users/UserHero";
 import UserBio from "@/components/users/UserBio";
 import Meta from "@/components/Meta";
 import PostFeed from "@/components/posts/PostFeed";
+import ProfileSkeleton from "@/components/skeletons/ProfileSkeleton";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -29,8 +30,14 @@ const ProfilePage = () => {
         secLabel={`${fetchedUser?.posts?.length || 0} posts`}
         showBackArrow
       />
-      <UserHero userId={userId as string} />
-      <UserBio userId={userId as string} />
+      {isLoading ? (
+        <ProfileSkeleton />
+      ) : (
+        <>
+          <UserHero userId={userId as string} />
+          <UserBio userId={userId as string} />{" "}
+        </>
+      )}
       <PostFeed userId={userId as string} />
     </>
   );
