@@ -40,7 +40,7 @@ const Followers = () => {
       <MiniNav />
       {isUsersLoading ? (
         Array.from({ length: 5 }).map((_, i) => <UserCardSkeleton key={i} />)
-      ) : (
+      ) : fetchedFollowers.length > 0 ? (
         <div className="w-full flex flex-col gap-3 lg:gap-4 p-3">
           {fetchedFollowers.map((user: Record<string, any>) => (
             <UserCard
@@ -54,6 +54,15 @@ const Followers = () => {
               showBio
             />
           ))}
+        </div>
+      ) : (
+        <div className="px-4 py-8 flex flex-col items-center gap-2">
+          <h4 className="text-xl sm:text-2xl font-semibold">
+            @{fetchedUser?.username} isn’t followed by anyone
+          </h4>
+          <p className="font-light text-sm">
+            Once they get followed by accounts, they’ll show up here.
+          </p>
         </div>
       )}
     </>

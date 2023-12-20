@@ -1,8 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useCallback } from "react";
-import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
 import { IoMdTrash } from "react-icons/io";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -12,26 +11,8 @@ import Header from "@/components/Header";
 import Meta from "@/components/Meta";
 import NotificationsFeed from "@/components/NotificationsFeed";
 
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-
-  if (!session?.user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      session,
-    },
-  };
-}
-
 const Notifications = () => {
+  const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutateNotifications } = useNotifications(currentUser?.id);
 
@@ -44,6 +25,12 @@ const Notifications = () => {
       toast.error("Something went wrong");
     }
   }, [mutateNotifications, currentUser?.id]);
+
+  useEffect(() => {
+    if (!currentUser?.id) {
+      router.replace("/");
+    }
+  }, [currentUser?.id, router]);
 
   return (
     <>
