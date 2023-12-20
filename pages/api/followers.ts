@@ -11,7 +11,18 @@ export default async function handler(
   }
 
   try {
-    const users = await prisma.user.findMany({
+    const { userId } = req.query;
+
+    if (!userId || typeof userId !== "string") {
+      throw new Error("Invalid ID");
+    }
+
+    const followers = await prisma.user.findMany({
+      where: {
+        followingIds: {
+          has: userId,
+        },
+      },
       orderBy: {
         verified: "desc",
       },
@@ -21,10 +32,11 @@ export default async function handler(
         username: true,
         verified: true,
         profileImage: true,
+        bio: true,
       },
     });
 
-    return res.status(200).json(users);
+    return res.status(200).json(followers);
   } catch (error) {
     console.log(error);
     return res.status(400).end();

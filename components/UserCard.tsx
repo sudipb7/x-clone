@@ -5,12 +5,18 @@ import useFollow from "@/hooks/useFollow";
 import Avatar from "./Avatar";
 import Button from "./Button";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { useMemo } from "react";
 
 interface UserCardProps {
   id: string;
   name: string;
   username: string;
   verified?: boolean;
+  bio?: boolean;
+  btnSize?: "lg" | "sm";
+  showBio?: boolean;
+  hideBtn?: boolean;
 }
 
 const UserCard: React.FC<UserCardProps> = ({
@@ -18,15 +24,25 @@ const UserCard: React.FC<UserCardProps> = ({
   name,
   username,
   verified,
+  bio,
+  showBio,
+  hideBtn,
+  btnSize = "sm",
 }) => {
   const router = useRouter();
+  const { data: currentUser } = useCurrentUser();
   const { isFollowing, toggleFollow } = useFollow(id);
 
+  const isLoggedInUser = useMemo(() => {
+    if (!currentUser?.id) return false;
+    return currentUser?.id === id;
+  }, [currentUser?.id, id]);
+
   return (
-    <div className="w-full px-2 flex flex-row justify-between items-center">
+    <div className="w-full px-2 flex flex-row justify-between items-start">
       <div
         onClick={() => router.push(`/profile/${id}`)}
-        className="flex flex-row gap-3 items-center"
+        className="flex flex-row gap-3 items-start"
       >
         <Avatar userId={id} />
         <div className="flex flex-col cursor-pointer">
@@ -39,16 +55,21 @@ const UserCard: React.FC<UserCardProps> = ({
             {name}
             {verified && <RiVerifiedBadgeFill color="#0EA5E9" size={14} />}
           </p>
-          <span className="font-light text-xs">@{username}</span>
+          <span className="text-xs">@{username}</span>
+          {showBio && bio ? (
+            <span className="text-xs sm:text-sm mt-0.5">{bio}</span>
+          ) : null}
         </div>
       </div>
-      <Button
-        rounded
-        size="small"
-        label={isFollowing ? "Unfollow" : "Follow"}
-        variant={isFollowing ? "outline" : "primary"}
-        onClick={toggleFollow}
-      />
+      {!hideBtn && !isLoggedInUser ? (
+        <Button
+          rounded
+          size={btnSize === "lg" ? "default" : "small"}
+          label={isFollowing ? "Unfollow" : "Follow"}
+          variant={isFollowing ? "outline" : "primary"}
+          onClick={toggleFollow}
+        />
+      ) : null}
     </div>
   );
 };

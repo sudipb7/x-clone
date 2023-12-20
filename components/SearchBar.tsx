@@ -78,6 +78,7 @@ const SearchBar = () => {
               id={user.id}
               username={user.username}
               verified={user.verified}
+              hideBtn
             />
           ))}
       </div>
