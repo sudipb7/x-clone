@@ -13,7 +13,7 @@ const RightSidebar = () => {
       "
     >
       <SearchBar hideOnSmallDevices />
-      <FollowBar hideOnSmallDevices />
+      <FollowBar />
     </div>
   );
 };
