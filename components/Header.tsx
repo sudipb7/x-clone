@@ -1,15 +1,24 @@
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { BiArrowBack } from "react-icons/bi";
+import UserDropdown from "./users/UserDropdown";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 interface HeaderProps {
   label: string;
   secLabel?: string;
   showBackArrow?: boolean;
+  showDropdown?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
+const Header: React.FC<HeaderProps> = ({
+  label,
+  secLabel,
+  showBackArrow,
+  showDropdown,
+}) => {
   const router = useRouter();
+  const { data: currentUser } = useCurrentUser();
 
   const handleBack = useCallback(() => {
     router.back();
@@ -17,11 +26,14 @@ const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
 
   return (
     <div
-      className="
+      className={`
         sticky top-0 left-0 
         bg-white bg-opacity-20 backdrop-blur-2xl 
         border-b px-3 py-1.5 z-10
-      "
+        ${
+          currentUser && showDropdown ? "flex justify-between items-center" : ""
+        }
+      `}
     >
       <div className="flex flex-row items-center gap-5">
         {showBackArrow && (
@@ -36,6 +48,7 @@ const Header: React.FC<HeaderProps> = ({ label, secLabel, showBackArrow }) => {
           ) : null}
         </div>
       </div>
+      {currentUser && showDropdown ? <UserDropdown /> : null}
     </div>
   );
 };

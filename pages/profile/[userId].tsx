@@ -29,6 +29,7 @@ const ProfilePage = () => {
         label={fetchedUser?.name}
         secLabel={`${fetchedUser?.posts?.length || 0} posts`}
         showBackArrow
+        showDropdown
       />
       {isLoading ? (
         <ProfileSkeleton />
