@@ -12,8 +12,8 @@ const RightSidebar = () => {
         max-md:hidden border-l
       "
     >
-      <SearchBar />
-      <FollowBar />
+      <SearchBar hideOnSmallDevices />
+      <FollowBar hideOnSmallDevices />
     </div>
   );
 };

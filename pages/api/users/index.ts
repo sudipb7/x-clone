@@ -11,7 +11,11 @@ export default async function handler(
   }
 
   try {
+    const userCount = await prisma.user.count();
+
     const users = await prisma.user.findMany({
+      take: 6,
+      skip: Math.floor(Math.random() * userCount),
       orderBy: {
         verified: "desc",
       },
@@ -21,6 +25,7 @@ export default async function handler(
         username: true,
         verified: true,
         profileImage: true,
+        bio: true,
       },
     });
 

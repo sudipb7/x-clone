@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import useUser from "@/hooks/useUser";
 import Meta from "@/components/Meta";
 import Header from "@/components/Header";
-import UserCard from "@/components/UserCard";
+import UserCard from "@/components/users/UserCard";
 import UserCardSkeleton from "@/components/skeletons/UserCardSkeleton";
 import MiniNav from "@/components/MiniNav";
 

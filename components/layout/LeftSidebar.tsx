@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { IoIosLogOut } from "react-icons/io";
-import { BsBell, BsBellFill } from "react-icons/bs";
+import { BsBell, BsBellFill, BsSearch } from "react-icons/bs";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaUser, FaRegUser, FaXTwitter } from "react-icons/fa6";
 import { GoHome, GoHomeFill } from "react-icons/go";
@@ -25,6 +25,12 @@ const LeftSidebar = () => {
       href: "/",
       icon: GoHome,
       activeIcon: GoHomeFill,
+    },
+    {
+      label: "Explore",
+      href: "/explore",
+      icon: BsSearch,
+      activeIcon: BsSearch,
     },
     {
       label: "Notifications",
@@ -61,7 +67,7 @@ const LeftSidebar = () => {
     >
       <div
         className="
-          mx-auto gap-2
+          mx-auto gap-1
           flex flex-col justify-center  
           max-md:items-center items-start
         "

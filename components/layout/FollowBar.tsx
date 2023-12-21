@@ -3,11 +3,12 @@ import { useMemo } from "react";
 import useUsers from "@/hooks/useUsers";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
-import UserCard from "../UserCard";
+import UserCard from "../users/UserCard";
+import UserCardSkeleton from "../skeletons/UserCardSkeleton";
 
 const FollowBar = () => {
   const { data: currentUser } = useCurrentUser();
-  const { data: fetchedUsers = [] } = useUsers();
+  const { data: fetchedUsers = [], isLoading } = useUsers();
 
   const users = useMemo(() => {
     if (!currentUser) {
@@ -38,15 +39,19 @@ const FollowBar = () => {
           justify-center w-full gap-3
         "
       >
-        {users.map((user: Record<string, any>) => (
-          <UserCard
-            key={user.id}
-            id={user.id}
-            name={user.name}
-            username={user.username}
-            verified={user.verified as boolean}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <UserCardSkeleton key={i} />
+            ))
+          : users.map((user: Record<string, any>) => (
+              <UserCard
+                key={user.id}
+                id={user.id}
+                name={user.name}
+                username={user.username}
+                verified={user.verified as boolean}
+              />
+            ))}
       </div>
     </div>
   );

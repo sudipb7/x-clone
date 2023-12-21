@@ -1,4 +1,4 @@
-import { BsBell, BsBellFill } from "react-icons/bs";
+import { BsBell, BsBellFill, BsSearch } from "react-icons/bs";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaUser, FaRegUser } from "react-icons/fa6";
 import { GoHome, GoHomeFill } from "react-icons/go";
@@ -15,6 +15,12 @@ const BottomBar = () => {
       href: "/",
       icon: GoHome,
       activeIcon: GoHomeFill,
+    },
+    {
+      label: "Explore",
+      href: "/explore",
+      icon: BsSearch,
+      activeIcon: BsSearch,
     },
     {
       label: "Notifications",
@@ -44,7 +50,7 @@ const BottomBar = () => {
     <div
       className="
       fixed bottom-0 left-0 
-      w-full z-20 p-2 sm:hidden
+      w-full z-20 p-1.5 sm:hidden
       flex items-center justify-evenly
       bg-white border-t
       "

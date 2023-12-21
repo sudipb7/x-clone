@@ -5,9 +5,13 @@ import { LuLoader2 } from "react-icons/lu";
 import useDebounce from "@/hooks/useDebounce";
 import useSearch from "@/hooks/useSearch";
 
-import UserCard from "./UserCard";
+import UserCard from "./users/UserCard";
 
-const SearchBar = () => {
+const SearchBar = ({
+  hideOnSmallDevices,
+}: {
+  hideOnSmallDevices?: boolean;
+}) => {
   const [value, setValue] = useState<string>("");
   const debouncedValue = useDebounce(value);
   const { data: fetchedUsers = [], isLoading } = useSearch(debouncedValue);
@@ -15,21 +19,26 @@ const SearchBar = () => {
   const divStyle = fetchedUsers && debouncedValue ? { display: "flex" } : { display: "none" };
 
   return (
-    <div className="w-full relative max-lg:hidden">
+    <div
+      className={`
+        w-full relative 
+        ${hideOnSmallDevices ? "max-lg:hidden" : ""}
+      `}
+    >
       <input
         type="text"
         name="search"
         onChange={(e) => setValue(e.target.value)}
         value={value}
         placeholder="Search"
-        className="
+        className={`
           peer placeholder:text-zinc-500
           p-3 pl-12 w-full rounded-full 
           outline-none focus:outline-none
           bg-gray-100 focus:bg-white
           focus:ring-1 focus:ring-sky-500
-          max-lg:hidden
-        "
+          ${hideOnSmallDevices ? "max-lg:hidden" : ""}
+        `}
       />
       <BsSearch
         size={18}

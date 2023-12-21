@@ -1,12 +1,12 @@
+import { useMemo } from "react";
 import { useRouter } from "next/router";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 import useFollow from "@/hooks/useFollow";
-
-import Avatar from "./Avatar";
-import Button from "./Button";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useMemo } from "react";
+
+import Avatar from "../Avatar";
+import Button from "../Button";
 
 interface UserCardProps {
   id: string;

@@ -54,8 +54,10 @@ const UserDropdown: React.FC = () => {
           <div className="px-2 py-1.5 flex items-center gap-3">
             <Avatar userId={currentUser?.id} />
             <div>
-              <h3 className="text-sm font-medium">Sudip Biswas</h3>
-              <p className="text-[10px] text-zinc-600">@sudipbiswas</p>
+              <h3 className="text-sm font-medium">{currentUser?.name}</h3>
+              <p className="text-[10px] text-zinc-600">
+                @{currentUser?.username}
+              </p>
             </div>
           </div>
           <hr />
