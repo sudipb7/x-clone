@@ -8,7 +8,9 @@ const Home = () => {
     <>
       <Meta title="Home | X" />
       <Header label="Home" />
-      <Form placeholder="What's happening?!" />
+      <div className="max-sm:hidden">
+        <Form placeholder="What's happening?!" />
+      </div>
       <PostFeed />
     </>
   );

@@ -2,13 +2,21 @@ import { useCallback } from "react";
 import { FaFeather } from "react-icons/fa";
 
 import useLoginModal from "@/hooks/modals/useLoginModal";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import usePostModal from "@/hooks/modals/usePostModal";
 
 const SidebarTweetButton = () => {
+  const { data: currentUser } = useCurrentUser();
   const loginModal = useLoginModal();
+  const postModal = usePostModal();
 
   const onClick = useCallback(() => {
-    loginModal.onOpen();
-  }, [loginModal]);
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    return postModal.onOpen();
+  }, [loginModal, currentUser, postModal]);
 
   return (
     <div className="w-full" onClick={onClick}>

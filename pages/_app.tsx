@@ -12,12 +12,16 @@ import RegisterModal from "@/components/modals/RegisterModal";
 import EditModal from "@/components/modals/EditModal";
 import VerifyModal from "@/components/modals/VerifyModal";
 import LogoutModal from "@/components/modals/LogoutModal";
+import PostModal from "@/components/modals/PostModal";
+import FloatingButton from "@/components/FloatingButton";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <Toaster />
+      <FloatingButton />
+      <PostModal />
       <VerifyModal />
       <EditModal />
       <LoginModal />

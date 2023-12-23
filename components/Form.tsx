@@ -17,9 +17,10 @@ interface FormProps {
   placeholder: string;
   isComment?: boolean;
   postId?: string;
+  rows?: number;
 }
 
-const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
+const Form: React.FC<FormProps> = ({ placeholder, isComment, postId, rows }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
 
@@ -61,6 +62,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
           </div>
           <div className="flex-1">
             <textarea
+              rows={rows || 3}
               disabled={isLoading}
               onChange={(e) => setBody(e.target.value)}
               value={body}

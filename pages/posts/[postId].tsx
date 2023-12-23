@@ -30,6 +30,7 @@ const PostView = () => {
       <Form
         postId={postId as string}
         isComment
+        rows={2}
         placeholder="Tweet your reply"
       />
       <ReplyFeed postId={postId as string} />

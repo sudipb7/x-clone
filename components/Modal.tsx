@@ -6,16 +6,17 @@ import Button from "./Button";
 
 interface ModalProps {
   title?: string;
-  actionLabel: string;
+  actionLabel?: string;
   isOpen?: boolean;
   disabled?: boolean;
   showCloseButton?: boolean;
   showLogo?: boolean;
+  hideActionBtn?: boolean;
   size: "lg" | "sm";
   body?: React.ReactElement;
   footer?: React.ReactElement;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -23,6 +24,7 @@ const Modal: React.FC<ModalProps> = ({
   actionLabel,
   isOpen,
   disabled,
+  hideActionBtn,
   body,
   footer,
   onClose,
@@ -45,7 +47,7 @@ const Modal: React.FC<ModalProps> = ({
   }, [disabled, onClose]);
 
   const handleSubmit = useCallback(() => {
-    if (disabled) {
+    if (disabled || !onSubmit) {
       return;
     }
 
@@ -110,14 +112,16 @@ const Modal: React.FC<ModalProps> = ({
           </div>
           {/* Footer */}
           <div className="flex flex-col items-center justify-center gap-2 mt-3">
-            <Button
-              rounded
-              fullWidth
-              size="large"
-              label={actionLabel}
-              disabled={disabled}
-              onClick={handleSubmit}
-            />
+            {!hideActionBtn && (
+              <Button
+                rounded
+                fullWidth
+                size="large"
+                label={actionLabel as string}
+                disabled={disabled}
+                onClick={handleSubmit}
+              />
+            )}
             {footer}
           </div>
         </div>
