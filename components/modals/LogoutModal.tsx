@@ -2,14 +2,16 @@ import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 
-import useLogoutModal from "@/hooks/modals/useLogoutModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 import Modal from "../Modal";
 import Button from "../Button";
 
 const LogoutModal = () => {
   const router = useRouter();
-  const logoutModal = useLogoutModal();
+  const { isOpen, onClose, type } = useModal();
+
+  const isModalOpen = isOpen && type === "logout";
 
   const onSubmit = useCallback(async () => {
     await signOut();
@@ -25,7 +27,7 @@ const LogoutModal = () => {
       variant="outline"
       size="large"
       label="Cancel"
-      onClick={logoutModal.onClose}
+      onClick={onClose}
       fullWidth
       rounded
     />
@@ -39,8 +41,8 @@ const LogoutModal = () => {
       onSubmit={onSubmit}
       body={bodyContent}
       footer={footerContent}
-      isOpen={logoutModal.isOpen}
-      onClose={logoutModal.onClose}
+      isOpen={isModalOpen}
+      onClose={onClose}
       showLogo
     />
   );

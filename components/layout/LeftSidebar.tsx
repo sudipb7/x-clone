@@ -7,17 +7,15 @@ import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaUser, FaRegUser, FaXTwitter } from "react-icons/fa6";
 import { GoHome, GoHomeFill } from "react-icons/go";
 
+import { useModal } from "@/hooks/use-modal-store";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useVerifyModal from "@/hooks/modals/useVerifyModal";
-import useLogoutModal from "@/hooks/modals/useLogoutModal";
 
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
 
 const LeftSidebar = () => {
   const { data: currentUser } = useCurrentUser();
-  const verifyModal = useVerifyModal();
-  const logoutModal = useLogoutModal();
+  const { onOpen } = useModal();
 
   const items = [
     {
@@ -100,12 +98,12 @@ const LeftSidebar = () => {
         {currentUser ? (
           <>
             <SidebarItem
-              onClick={verifyModal.onOpen}
+              onClick={() => onOpen("verify")}
               icon={FaXTwitter}
               label="Premium"
             />
             <SidebarItem
-              onClick={logoutModal.onOpen}
+              onClick={() => onOpen("logout")}
               icon={IoIosLogOut}
               label="Logout"
             />

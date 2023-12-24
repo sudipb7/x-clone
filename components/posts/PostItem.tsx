@@ -7,9 +7,9 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { MdOutlineContentCopy } from "react-icons/md";
 
+import { useModal } from "@/hooks/use-modal-store";
 import useLike from "@/hooks/useLike";
 import useBookmark from "@/hooks/useBookmark";
-import useLoginModal from "@/hooks/modals/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import usePost from "@/hooks/usePost";
 
@@ -22,12 +22,10 @@ interface PostItemProps {
 
 const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const router = useRouter();
-  const loginModal = useLoginModal();
+  const { onOpen } = useModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { data: parentPost } = usePost(
-    data?.parentId
-  );
+  const { data: parentPost } = usePost(data?.parentId);
   const { hasLiked, toggleLike } = useLike({
     postId: data?.id,
     userId,
@@ -63,24 +61,51 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
     (event: any) => {
       event.stopPropagation();
       if (!currentUser) {
-        return loginModal.onOpen();
+        return onOpen("login");
       }
 
       toggleLike();
     },
-    [loginModal, toggleLike, currentUser]
+    [onOpen, toggleLike, currentUser]
+  );
+
+  const onReply = useCallback(
+    (event: any) => {
+      event.stopPropagation();
+      if (!currentUser) {
+        return onOpen("login");
+      }
+
+      if (router.pathname.includes("/posts")) {
+        if (router.query?.postId !== data?.id) {
+          return onOpen("post", {
+            isComment: true,
+            postId: data?.id,
+            isModal: true,
+          });
+        }
+        return;
+      }
+
+      return onOpen("post", {
+        isComment: true,
+        postId: data?.id,
+        isModal: true,
+      });
+    },
+    [onOpen, currentUser, data?.id, router.pathname, router.query?.postId]
   );
 
   const onBookmark = useCallback(
     (event: any) => {
       event.stopPropagation();
       if (!currentUser) {
-        return loginModal.onOpen();
+        return onOpen("login");
       }
 
       toggleBookmark();
     },
-    [loginModal, toggleBookmark, currentUser]
+    [onOpen, toggleBookmark, currentUser]
   );
 
   const onShare = useCallback(
@@ -157,6 +182,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
           <div className="mt-0.5 max-sm:text-sm">{data?.body}</div>
           <div className="flex flex-row items-center justify-between mt-1.5 pr-10">
             <div
+              onClick={onReply}
               className="
                 flex 
                 flex-row 

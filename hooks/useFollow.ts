@@ -3,14 +3,14 @@ import { toast } from "react-hot-toast";
 import { useMemo, useCallback } from "react";
 
 import useCurrentUser from "./useCurrentUser";
-import useLoginModal from "./modals/useLoginModal";
+import { useModal } from "./use-modal-store";
 import useUser from "./useUser";
 
 const useFollow = (userId: string) => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { mutate: mutateFetchedUser } = useUser(userId);
 
-  const loginModal = useLoginModal();
+  const { onOpen } = useModal();
 
   const isFollowing = useMemo(() => {
     const list = currentUser?.followingIds || [];
@@ -20,7 +20,7 @@ const useFollow = (userId: string) => {
 
   const toggleFollow = useCallback(async () => {
     if (!currentUser) {
-      return loginModal.onOpen();
+      return onOpen("login");
     }
 
     try {
@@ -45,7 +45,7 @@ const useFollow = (userId: string) => {
     userId,
     mutateCurrentUser,
     mutateFetchedUser,
-    loginModal,
+    onOpen,
   ]);
 
   return {

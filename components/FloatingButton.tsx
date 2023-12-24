@@ -1,22 +1,20 @@
 import { useCallback } from "react";
 import { BsFeather } from "react-icons/bs";
 
-import useLoginModal from "@/hooks/modals/useLoginModal";
-import usePostModal from "@/hooks/modals/usePostModal";
+import { useModal } from "@/hooks/use-modal-store";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 const FloatingButton = () => {
   const { data: currentUser } = useCurrentUser();
-  const postModal = usePostModal();
-  const loginModal = useLoginModal();
+  const { onOpen } = useModal();
 
   const onClick = useCallback(() => {
     if (!currentUser) {
-      return loginModal.onOpen();
+      return onOpen("login");
     }
 
-    return postModal.onOpen();
-  }, [currentUser, postModal, loginModal]);
+    return onOpen("post");
+  }, [currentUser, onOpen]);
 
   return (
     <div

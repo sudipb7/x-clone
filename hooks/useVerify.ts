@@ -2,8 +2,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useMemo, useCallback } from "react";
 
+import { useModal } from "./use-modal-store";
 import useCurrentUser from "./useCurrentUser";
-import useLoginModal from "./modals/useLoginModal";
 import usePosts from "./usePosts";
 import useUser from "./useUser";
 
@@ -13,7 +13,7 @@ const useVerify = (userId: string) => {
   const { mutate: mutatePosts } = usePosts();
   const { mutate: mutateUserPosts } = usePosts(userId);
 
-  const loginModal = useLoginModal();
+  const { onOpen } = useModal();
 
   const isVerified = useMemo(() => {
     return currentUser?.verified;
@@ -21,7 +21,7 @@ const useVerify = (userId: string) => {
 
   const toggleVerification = useCallback(async () => {
     if (!currentUser) {
-      return loginModal.onOpen();
+      return onOpen("login");
     }
 
     try {
@@ -49,7 +49,7 @@ const useVerify = (userId: string) => {
   }, [
     currentUser,
     isVerified,
-    loginModal,
+    onOpen,
     mutatePosts,
     mutateUserPosts,
     mutateFetchedUser,

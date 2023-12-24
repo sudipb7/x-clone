@@ -1,22 +1,28 @@
-import { useState } from "react";
-
-import usePostModal from "@/hooks/modals/usePostModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 import Form from "../Form";
 import Modal from "../Modal";
 
 const PostModal = () => {
-  const postModal = usePostModal();
-  const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onClose, type, data } = useModal();
 
-  const bodyContent = <Form placeholder="What's happening?!" rows={6} />;
+  const isModalOpen = isOpen && type === "post";
+
+  const bodyContent = (
+    <Form
+      postId={data?.postId}
+      isComment={data?.isComment}
+      placeholder="What's happening?!"
+      isModal={data?.isModal}
+      rows={5}
+    />
+  );
 
   return (
     <Modal
       size="lg"
-      onClose={postModal.onClose}
-      isOpen={postModal.isOpen}
-      disabled={isLoading}
+      onClose={onClose}
+      isOpen={isModalOpen}
       showCloseButton
       hideActionBtn
       title="Create a Post"

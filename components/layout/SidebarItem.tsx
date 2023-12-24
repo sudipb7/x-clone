@@ -4,7 +4,7 @@ import { IconType } from "react-icons";
 import { BsDot } from "react-icons/bs";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useLoginModal from "@/hooks/modals/useLoginModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface SidebarItemProps {
   label: string;
@@ -26,7 +26,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   alert,
 }) => {
   const { data: currentUser } = useCurrentUser();
-  const loginModal = useLoginModal();
+  const { onOpen } = useModal();
   const router = useRouter();
 
   const isActive = useMemo(() => {
@@ -43,11 +43,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     }
 
     if (auth && !currentUser) {
-      loginModal.onOpen();
+      onOpen("login");
     } else if (href) {
       router.push(href);
     }
-  }, [router, onClick, href, currentUser, auth, loginModal]);
+  }, [router, onClick, href, currentUser, auth, onOpen]);
 
   return (
     <div

@@ -3,17 +3,15 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoIosLogOut } from "react-icons/io";
 
+import { useModal } from "@/hooks/use-modal-store";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useLogoutModal from "@/hooks/modals/useLogoutModal";
-import useVerifyModal from "@/hooks/modals/useVerifyModal";
 
 import Avatar from "../Avatar";
 
 const UserDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: currentUser } = useCurrentUser();
-  const logoutModal = useLogoutModal();
-  const verifyModal = useVerifyModal();
+  const { onOpen } = useModal();
 
   const toggleIsOpen = () => {
     setIsOpen((prev) => !prev);
@@ -22,13 +20,13 @@ const UserDropdown: React.FC = () => {
   const onClick = useCallback(
     (action: "verfify" | "logout") => {
       if (action === "verfify") {
-        verifyModal.onOpen();
+        onOpen("verify");
       } else {
-        logoutModal.onOpen();
+        onOpen("logout");
       }
       toggleIsOpen();
     },
-    [verifyModal, logoutModal]
+    [onOpen]
   );
 
   return (

@@ -5,9 +5,9 @@ import { SlLocationPin } from "react-icons/sl";
 import { BsBriefcase } from "react-icons/bs";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 
+import { useModal } from "@/hooks/use-modal-store";
 import useFollow from "@/hooks/useFollow";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useEditModal from "@/hooks/modals/useEditModal";
 import useUser from "@/hooks/useUser";
 
 import Button from "../Button";
@@ -21,7 +21,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
   const { toggleFollow, isFollowing } = useFollow(userId);
-  const editModal = useEditModal();
+  const { onOpen } = useModal();
 
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
@@ -38,7 +38,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
           <Button
             variant="outline"
             rounded
-            onClick={editModal.onOpen}
+            onClick={() => onOpen("edit")}
             label="Edit Profile"
           />
         ) : (

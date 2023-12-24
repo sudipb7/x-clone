@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import useUser from "@/hooks/useUser";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useEditModal from "@/hooks/modals/useEditModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 import Modal from "../Modal";
 import Input from "../Input";
@@ -13,7 +13,9 @@ import ImageUpload from "../ImageUpload";
 const EditModal = () => {
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
-  const editModal = useEditModal();
+  const { isOpen, onClose, type } = useModal();
+
+  const isModalOpen = isOpen && type === "edit";
 
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -61,7 +63,7 @@ const EditModal = () => {
 
       toast.success("Profile updated");
 
-      editModal.onClose();
+      onClose();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -76,7 +78,7 @@ const EditModal = () => {
     profileImage,
     location,
     mutateFetchedUser,
-    editModal,
+    onClose,
   ]);
 
   const bodyContent = (
@@ -134,8 +136,8 @@ const EditModal = () => {
       disabled={isLoading}
       onSubmit={onSubmit}
       body={bodyContent}
-      isOpen={editModal.isOpen}
-      onClose={editModal.onClose}
+      isOpen={isModalOpen}
+      onClose={onClose}
       showLogo
       showCloseButton
     />

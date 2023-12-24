@@ -2,8 +2,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useMemo, useCallback } from "react";
 
+import { useModal } from "./use-modal-store";
 import useCurrentUser from "./useCurrentUser";
-import useLoginModal from "./modals/useLoginModal";
 import usePost from "./usePost";
 import usePosts from "./usePosts";
 import useReplies from "./useReplies";
@@ -22,7 +22,7 @@ const useLike = ({
   const { mutate: mutateFetchedPosts } = usePosts(userId);
   const { mutate: mutateReplies } = useReplies(parentId);
 
-  const loginModal = useLoginModal();
+  const { onOpen } = useModal();
 
   const hasLiked = useMemo(() => {
     const list = fetchedPost?.likedIds || [];
@@ -32,7 +32,7 @@ const useLike = ({
 
   const toggleLike = useCallback(async () => {
     if (!currentUser) {
-      return loginModal.onOpen();
+      return onOpen("login");
     }
 
     try {
@@ -59,7 +59,7 @@ const useLike = ({
     postId,
     mutateFetchedPost,
     mutateFetchedPosts,
-    loginModal,
+    onOpen,
     parentId,
     mutateReplies,
   ]);

@@ -3,15 +3,15 @@ import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useState, useCallback } from "react";
 
-import useRegisterModal from "@/hooks/modals/useRegisterModal";
-import useLoginModal from "@/hooks/modals/useLoginModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 import Input from "../Input";
 import Modal from "../Modal";
 
 const RegisterModal = () => {
-  const registerModal = useRegisterModal();
-  const loginModal = useLoginModal();
+  const { type, isOpen, onOpen, onClose } = useModal();
+
+  const isRegisterModalOpen = isOpen && type === "register";
 
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -24,9 +24,9 @@ const RegisterModal = () => {
       return;
     }
 
-    registerModal.onClose();
-    loginModal.onOpen();
-  }, [isLoading, registerModal, loginModal]);
+    onClose();
+    onOpen("login");
+  }, [isLoading, onOpen, onClose]);
 
   const onSubmit = useCallback(async () => {
     try {
@@ -46,13 +46,13 @@ const RegisterModal = () => {
         password,
       });
 
-      registerModal.onClose();
+      onClose();
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal, name, email, username, password]);
+  }, [onClose, name, email, username, password]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -102,10 +102,10 @@ const RegisterModal = () => {
     <Modal
       size="lg"
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
+      isOpen={isRegisterModalOpen}
       title="Create an account"
       actionLabel="Continue"
-      onClose={registerModal.onClose}
+      onClose={onClose}
       onSubmit={onSubmit}
       body={bodyContent}
       footer={footerContent}

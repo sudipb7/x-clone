@@ -3,14 +3,16 @@ import { useCallback, useState } from "react";
 
 import useVerify from "@/hooks/useVerify";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useVerifyModal from "@/hooks/modals/useVerifyModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 import Modal from "../Modal";
 
 const VerifyModal = () => {
   const { data: currentUser } = useCurrentUser();
   const { isVerified, toggleVerification } = useVerify(currentUser?.id);
-  const verifyModal = useVerifyModal();
+  const { isOpen, type, onClose } = useModal();
+
+  const isModalOpen = isOpen && type === "verify";
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -18,13 +20,13 @@ const VerifyModal = () => {
     try {
       setIsLoading(true);
       toggleVerification();
-      verifyModal.onClose();
+      onClose();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [toggleVerification, verifyModal]);
+  }, [toggleVerification, onClose]);
 
   const bodyContent = (
     <div className="w-full flex justify-center items-center">
@@ -42,8 +44,8 @@ const VerifyModal = () => {
       disabled={isLoading}
       onSubmit={onSubmit}
       body={bodyContent}
-      isOpen={verifyModal.isOpen}
-      onClose={verifyModal.onClose}
+      isOpen={isModalOpen}
+      onClose={onClose}
       showCloseButton
       showLogo
     />

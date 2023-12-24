@@ -1,15 +1,15 @@
 import { useState, useCallback } from "react";
 import { signIn } from "next-auth/react";
 
-import useRegisterModal from "@/hooks/modals/useRegisterModal";
-import useLoginModal from "@/hooks/modals/useLoginModal";
+import { useModal } from "@/hooks/use-modal-store";
 
 import Input from "../Input";
 import Modal from "../Modal";
 
 const LoginModal = () => {
-  const registerModal = useRegisterModal();
-  const loginModal = useLoginModal();
+  const { type, isOpen, onOpen, onClose } = useModal();
+
+  const isLoginModalOpen = isOpen && type === "login";
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -20,9 +20,9 @@ const LoginModal = () => {
       return;
     }
 
-    loginModal.onClose();
-    registerModal.onOpen();
-  }, [isLoading, registerModal, loginModal]);
+    onClose();
+    onOpen("register");
+  }, [isLoading, onOpen, onClose]);
 
   const onSubmit = useCallback(async () => {
     try {
@@ -33,13 +33,13 @@ const LoginModal = () => {
         password,
       });
 
-      loginModal.onClose();
+      onClose();
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal, email, password]);
+  }, [onClose, email, password]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -77,10 +77,10 @@ const LoginModal = () => {
     <Modal
       size="lg"
       disabled={isLoading}
-      isOpen={loginModal.isOpen}
+      isOpen={isLoginModalOpen}
       title="Sign in to X"
       actionLabel="Sign in"
-      onClose={loginModal.onClose}
+      onClose={onClose}
       onSubmit={onSubmit}
       body={bodyContent}
       footer={footerContent}
