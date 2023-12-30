@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
       className={`
         disabled:opacity-70
         disabled:cursor-not-allowed
-        font-medium border
+        font-medium border transition
         ${styles[variant]}
         ${sizes[size]}
         ${fullWidth ? "w-full" : "w-fit"}

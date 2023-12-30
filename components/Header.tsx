@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
     >
       <div className="flex flex-row items-center gap-5">
         {showBackArrow && (
-          <div className="p-2.5 rounded-full hover:bg-gray-100 cursor-pointer">
+          <div className="p-2.5 rounded-full hover:bg-gray-100 cursor-pointer transition">
             <BiArrowBack onClick={handleBack} size={20} />
           </div>
         )}

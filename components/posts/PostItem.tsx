@@ -1,11 +1,11 @@
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import { useCallback, useMemo } from "react";
+import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { AiOutlineHeart, AiOutlineMessage, AiFillHeart } from "react-icons/ai";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
-import { MdOutlineContentCopy } from "react-icons/md";
+import { LuCopy, LuCheck } from "react-icons/lu";
 
 import { useModal } from "@/hooks/use-modal-store";
 import useLike from "@/hooks/useLike";
@@ -23,6 +23,7 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
   const router = useRouter();
   const { onOpen } = useModal();
+  const [copied, setCopied] = useState(false);
 
   const { data: currentUser } = useCurrentUser();
   const { data: parentPost } = usePost(data?.parentId);
@@ -108,16 +109,20 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
     [onOpen, toggleBookmark, currentUser]
   );
 
-  const onShare = useCallback(
+  const onCopy = useCallback(
     (event: any) => {
       event.stopPropagation();
-      const hostUrl =
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:3000"
-          : process.env.NEXT_PUBLIC_BASE_URL;
-      navigator.clipboard.writeText(`${hostUrl}/posts/${data.id}`);
+
+      const host = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
+      navigator.clipboard.writeText(`${host}/posts/${data.id}`);
+
+      setCopied(true);
       toast.success("Link copied");
-    },
+
+      setTimeout(() => {
+        setCopied(false);
+      }, 1000);
+    }, 
     [data?.id]
   );
 
@@ -138,7 +143,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
     <div
       onClick={goToPost}
       className="
-        border-b
+        border-b transition-all
         p-4 max-sm:p-3
         cursor-pointer
         hover:bg-gray-100/30
@@ -152,7 +157,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               onClick={goToUser}
               className="
                 font-semibold cursor-pointer hover:underline 
-                flex flex-row items-center gap-1 max-sm:text-sm
+                flex flex-row items-center gap-1 max-sm:text-sm transition
               "
             >
               {data?.user?.name}
@@ -162,7 +167,7 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
             </p>
             <span
               onClick={goToUser}
-              className="max-sm:text-sm text-zinc-500 cursor-pointer hover:underline"
+              className="max-sm:text-sm text-zinc-500 cursor-pointer hover:underline transition"
             >
               @{data?.user?.username}
             </span>
@@ -179,8 +184,8 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               </span>
             </div>
           )}
-          <div className="mt-0.5 max-sm:text-sm">{data?.body}</div>
-          <div className="flex flex-row items-center justify-between mt-1.5 pr-10">
+          <div className="mt-1 max-sm:text-sm">{data?.body}</div>
+          <div className="flex flex-row items-center justify-between mt-2 pr-10">
             <div
               onClick={onReply}
               className="
@@ -236,10 +241,10 @@ const PostItem: React.FC<PostItemProps> = ({ data, userId }) => {
               </p>
             </div>
             <div
-              onClick={onShare}
-              className="text-zinc-700 hover:text-green-500"
+              onClick={onCopy}
+              className="text-zinc-700 hover:text-green-500 transition"
             >
-              <MdOutlineContentCopy size={16} />
+              {copied ? <LuCheck size={16} /> : <LuCopy size={16} />}
             </div>
           </div>
         </div>

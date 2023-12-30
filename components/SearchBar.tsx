@@ -36,7 +36,7 @@ const SearchBar = ({
           p-3 pl-12 w-full rounded-full 
           outline-none focus:outline-none
           bg-gray-100 focus:bg-white
-          focus:ring-1 focus:ring-sky-500
+          focus:ring-1 focus:ring-sky-500 transition-all
           ${hideOnSmallDevices ? "max-lg:hidden" : ""}
         `}
       />
@@ -54,7 +54,7 @@ const SearchBar = ({
             w-full rounded-xl shadow-md
             hidden peer-focus:block bg-white
             text-sm font-light text-justify
-            p-6 pb-10 z-10 border
+            p-6 pb-10 z-10 border transition-all
           "
         >
           Try searching for people, lists, or keywords

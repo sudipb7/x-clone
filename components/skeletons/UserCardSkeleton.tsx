@@ -8,7 +8,7 @@ const UserCardSkeleton = () => {
           <div className="h-3 w-1/2 rounded-md mt-1 skeleton"></div>
         </div>
       </div>
-      <div className="h-5 w-10 rounded-full skeleton"></div>
+      <div className="h-7 w-[5rem] rounded-full skeleton"></div>
     </div>
   );
 };

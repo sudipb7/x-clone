@@ -42,7 +42,7 @@ const Notifications = () => {
         className="
           absolute bottom-5 right-5
         bg-red-500 hover:opacity-90 cursor-pointer
-          rounded-full p-3 
+          rounded-full p-3 transition
         "
       >
         <IoMdTrash size={20} color="white" />

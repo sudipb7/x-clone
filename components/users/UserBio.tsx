@@ -86,14 +86,14 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
         <div className="flex flex-row items-center text-sm mt-3 gap-6">
           <Link
             href={`/profile/followings/${fetchedUser?.id}`}
-            className="flex flex-row items-center gap-1 hover:underline"
+            className="flex flex-row items-center gap-1 hover:underline transition"
           >
             <p>{fetchedUser?.followingIds?.length}</p>
             <p className="text-zinc-500">Followings</p>
           </Link>
           <Link
             href={`/profile/followers/${fetchedUser?.id}`}
-            className="flex flex-row items-center gap-1 hover:underline"
+            className="flex flex-row items-center gap-1 hover:underline transition"
           >
             <p>{fetchedUser?.followersCount || 0}</p>
             <p className="text-zinc-500">Followers</p>

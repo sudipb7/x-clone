@@ -33,6 +33,7 @@ const Input: React.FC<InputProps> = ({
       />
       <label
         className="
+          pointer-events-none
           absolute top-3.5 left-[0.7rem] 
           transform origin-[0]
           -translate-y-3.5 scale-75

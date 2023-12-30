@@ -86,7 +86,7 @@ const Form: React.FC<FormProps> = ({
               Replying to{" "}
               <span
                 onClick={goToParentPost}
-                className="text-sky-500 hover:underline"
+                className="text-sky-500 hover:underline transition"
               >
                 @{parentPost?.user?.username}
               </span>
@@ -118,8 +118,8 @@ const Form: React.FC<FormProps> = ({
                 className="
                   opacity-0
                   peer-focus:opacity-100
-                  h-[1px]
-                  w-full
+                  h-[1px] w-full
+                  transition duration-200
                   border-sky-500
                 "
               />

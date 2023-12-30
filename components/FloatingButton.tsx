@@ -21,7 +21,7 @@ const FloatingButton = () => {
       onClick={onClick}
       className="
         flex sm:hidden items-center justify-center
-        p-3 rounded-full 
+        p-3 rounded-full transition
         bg-sky-500 hover:bg-sky-500/90
         fixed bottom-20 right-8 z-30 
         border border-sky-500

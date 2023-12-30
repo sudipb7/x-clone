@@ -60,7 +60,7 @@ const LeftSidebar = () => {
         max-sm:hidden p-3 z-20 border-r
         w-fit h-screen lg:w-[300px] xl:w-[340px] 
         flex items-start justify-center
-        sticky top-0 left-0
+        sticky top-0 left-0 transition
       "
     >
       <div
@@ -72,7 +72,7 @@ const LeftSidebar = () => {
       >
         <Link
           href="/"
-          className="my-3 p-4 lg:ml-2 rounded-full hover:bg-gray-100"
+          className="my-3 p-4 lg:ml-2 rounded-full transition hover:bg-gray-100"
         >
           <Image
             src="/logo.svg"

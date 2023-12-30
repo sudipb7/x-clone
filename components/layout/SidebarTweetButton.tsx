@@ -22,7 +22,7 @@ const SidebarTweetButton = () => {
         className="
           mt-2 rounded-full p-4
           flex items-center justify-center
-          bg-sky-500 lg:hidden
+          bg-sky-500 lg:hidden transition
           hover:bg-opacity-80 cursor-pointer
         "
       >
@@ -31,7 +31,7 @@ const SidebarTweetButton = () => {
       <div
         className="
           w-full mt-2 p-3 rounded-full
-          hidden lg:block bg-sky-500
+          hidden lg:block bg-sky-500 transition
           cursor-pointer hover:bg-opacity-90
         "
       >

@@ -10,7 +10,7 @@ const MiniNav = () => {
       <Link
         href={`/profile/followers/${userId}`}
         className={`
-          text-center font-semibold 
+          text-center font-semibold transition
           max-sm:p-3 p-3.5 w-1/2 border-r
           ${
             router.pathname.includes("/followers")
@@ -24,7 +24,7 @@ const MiniNav = () => {
       <Link
         href={`/profile/followings/${userId}`}
         className={`
-          text-center font-semibold 
+          text-center font-semibold transition
           max-sm:p-3 p-3.5 w-1/2 border-l
           ${
             router.pathname.includes("/followings")

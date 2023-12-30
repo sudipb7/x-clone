@@ -48,7 +48,7 @@ const UserCard: React.FC<UserCardProps> = ({
         <div className="flex flex-col cursor-pointer">
           <p
             className="
-              flex items-center gap-0.5
+              flex items-center gap-0.5 transition
               font-medium text-sm hover:underline
             "
           >

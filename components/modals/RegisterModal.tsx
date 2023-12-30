@@ -90,7 +90,7 @@ const RegisterModal = () => {
         Already have an account?{" "}
         <span
           onClick={onToggle}
-          className="cursor-pointer text-sky-500 hover:underline"
+          className="cursor-pointer text-sky-500 hover:underline transition"
         >
           Sign in
         </span>

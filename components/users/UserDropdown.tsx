@@ -34,7 +34,7 @@ const UserDropdown: React.FC = () => {
       <div
         onClick={toggleIsOpen}
         className="
-          p-2.5 rounded-full 
+          p-2.5 rounded-full transition
           cursor-pointer hover:bg-gray-100
         "
       >
@@ -45,7 +45,7 @@ const UserDropdown: React.FC = () => {
           className="
             absolute top-[100%] right-2
             flex flex-col border
-            gap-1 w-56 p-1
+            gap-1 w-56 p-1 transition-all
             rounded-md shadow-md bg-white
           "
         >
@@ -64,7 +64,7 @@ const UserDropdown: React.FC = () => {
             onClick={() => onClick("verfify")}
             className="
               rounded hover:bg-gray-100 
-              text-sm px-2 py-1.5 
+              text-sm px-2 py-1.5 transition
               flex items-center gap-2
             "
           >
@@ -76,7 +76,7 @@ const UserDropdown: React.FC = () => {
             onClick={() => onClick("logout")}
             className="
               rounded hover:bg-gray-100 
-              text-sm px-2 py-1.5 
+              text-sm px-2 py-1.5 transition
               flex items-center gap-2
             "
           >

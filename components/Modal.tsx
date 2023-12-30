@@ -86,7 +86,7 @@ const Modal: React.FC<ModalProps> = ({
               <div
                 onClick={handleClose}
                 className="
-                  absolute left-4 top-4 p-2 
+                  absolute left-4 top-4 p-2 transition
                   hover:bg-gray-100 rounded-full cursor-pointer
                 "
               >

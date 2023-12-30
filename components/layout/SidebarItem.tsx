@@ -32,9 +32,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   const isActive = useMemo(() => {
     if (!href) {
       return null;
-    } else if (router.pathname === href) {
+    } 
+
+    if (href === "/") {
       return router.pathname === href;
     }
+
+    return router.pathname.includes(href.split("/")[1]);
   }, [router.pathname, href]);
 
   const handleClick = useCallback(() => {
@@ -56,7 +60,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         flex items-center justify-start 
         gap-3 p-2.5 sm:p-4 lg:px-6 lg:py-3
         cursor-pointer rounded-full
-        hover:bg-gray-100 relative
+        hover:bg-gray-100 relative transition-all
         ${isActive ? "font-semibold text-black" : "text-black/80"}
       `}
     >

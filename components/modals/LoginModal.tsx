@@ -65,7 +65,7 @@ const LoginModal = () => {
         First time using X?{" "}
         <span
           onClick={onToggle}
-          className="cursor-pointer text-sky-500 hover:underline"
+          className="cursor-pointer text-sky-500 hover:underline transition"
         >
           Create an account
         </span>
