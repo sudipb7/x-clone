@@ -1,40 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# X Clone
 
-## Getting Started
+Replica of you favorite social media platform of X (Previously known as Twitter). Post tweets, Customize your profile, follow people, notifications and many more.
 
-First, run the development server:
+### Deployed [Link🔗](https://x-clone-sb.vercel.app)
+
+## Images
+
+### Hero
+
+![Hero](public/hero.png)
+
+### Profile
+
+![Profile](public/profile.png)
+
+## Tech Stack
+
+- NextJS
+- ReactJS
+- TypeScript
+- Prisma
+- Next-Auth
+- MongoDB
+- Tailwind CSS
+
+## Implementations
+
+- Authentication
+- Protected routes
+- Custom hooks
+- Vercel analytics & speed insights
+- Image upload
+- CRUD operations
+- API creation
+- Data fetching
+- Loading states
+- Customizable modals
+- Reusable and customizable components
+
+## Setting up locally
+
+### 1. Clone on your local machine
+
+```bash
+https://github.com/sudipb7/x-clone.git
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Add environment variables to your `.env` file
+
+```ts
+DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.mscaygz.mongodb.net/X-Clone"
+NEXTAUTH_SECRET="<YOUR_NEXTAUTH_SECRET>"
+NEXTAUTH_JWT_SECRET="<YOUR_NEXTAUTH_JWT_SECRET>"
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+```
+
+### 4. Run on your local server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Connect with me
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+[Twitter](https://twitter.com/SudipB7_)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+[LinkedIn](https://linkedin.com/in/sudipb7)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Instagram](https://instagram.com/sudipb7_)
